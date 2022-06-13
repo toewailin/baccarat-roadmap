@@ -7,7 +7,12 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@vue/eslint-config-standard": "^7.0.0",
+    "autoprefixer": "^9.8.8",
     "core-js": "^3.6.5",
+    "eslint": "^8.17.0",
+    "postcss": "^7.0.39",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0"
   },
@@ -15,6 +20,11 @@
     "@vue/cli-plugin-babel": "~4.5.15",
     "@vue/cli-plugin-router": "~4.5.15",
     "@vue/cli-service": "~4.5.15",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-standard": "^4.1.0",
+    "eslint-plugin-vue": "^7.20.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"

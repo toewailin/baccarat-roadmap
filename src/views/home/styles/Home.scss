@@ -1,0 +1,125 @@
+.home {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr 200px;
+  gap: 20px;
+  padding: 20px;
+
+  .roadmap-container {
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+
+  .roadmap {
+    $roadmap-border: 10px solid theme("colors.gray.900");
+
+    width: 100%;
+    height: 100%;
+    display: grid;
+    border-top: $roadmap-border;
+    border-left: $roadmap-border;
+    grid-template:
+      "breadPlate breadPlate bigRoad bigRoad"
+      "breadPlate breadPlate bigRoad bigRoad"
+      "breadPlate breadPlate bigEyeBoy bigEyeBoy"
+      "breadPlate breadPlate smallRoad cockroachPig";
+
+    .roadmap__item--title {
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+      font-weight: bold;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      border: 1px solid theme("colors.blue.500");
+      transition: 200ms ease;
+      transition-property: opacity, border-color;
+    }
+
+    .roadmap__item--bread-plate,
+    .roadmap__item--big-road,
+    .roadmap__item--small-road,
+    .roadmap__item--big-eye-boy,
+    .roadmap__item--cockroach-pig {
+      position: relative;
+
+      &:hover {
+        .roadmap__item--title {
+          opacity: 1;
+        }
+      }
+    }
+
+    .roadmap__item--bread-plate {
+      border-right: $roadmap-border;
+      border-bottom: $roadmap-border;
+      grid-area: breadPlate;
+    }
+
+    .roadmap__item--big-road {
+      border-right: $roadmap-border;
+      border-bottom: $roadmap-border;
+      grid-area: bigRoad;
+    }
+
+    .roadmap__item--small-road {
+      border-right: $roadmap-border;
+      border-bottom: $roadmap-border;
+      grid-area: smallRoad;
+    }
+
+    .roadmap__item--big-eye-boy {
+      border-right: $roadmap-border;
+      border-bottom: $roadmap-border;
+      grid-area: bigEyeBoy;
+    }
+
+    .roadmap__item--cockroach-pig {
+      border-right: $roadmap-border;
+      border-bottom: $roadmap-border;
+      grid-area: cockroachPig;
+    }
+  }
+
+  .grid {
+    $grid-border: 1px solid theme("colors.gray.600");
+
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 100%;
+    border: $grid-border;
+    grid-auto-rows: 1fr;
+
+    .grid__row {
+      display: flex;
+      height: 100%;
+
+      &:not(:last-child) {
+        border-bottom: $grid-border;
+      }
+
+      .grid__col {
+        padding: 5px;
+        min-height: 39px;
+        min-width: 30px;
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-basis: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+
+        &:not(:last-child) {
+          border-right: $grid-border;
+        }
+      }
+    }
+  }
+}
