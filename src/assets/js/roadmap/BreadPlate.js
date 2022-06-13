@@ -1,4 +1,4 @@
-const Roadmap = require('./Roadmap')
+import Roadmap from './Roadmap'
 
 import _get from 'lodash/get'
 
