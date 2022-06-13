@@ -53,11 +53,11 @@ export default class BigEyeBoy extends Roadmap {
       return
     }
 
-    const initialCoordinates = b2HasValue ? B2 : C1
+    let [initialRow, initialCol] = b2HasValue ? B2 : C1
 
     while (true) {
-      const col = this.bigRoadMatrix[initialCoordinates[0]][initialCoordinates[1]]
-      const isFirstRow = initialCoordinates[0] === 0
+      const col = this.bigRoadMatrix[initialRow][initialCol]
+      const isFirstRow = initialRow === 0
 
       const nextCoordinates = this.getBigRoadCoordinatesByIndex(col.index + 1)
 
@@ -65,16 +65,23 @@ export default class BigEyeBoy extends Roadmap {
        * If first row, check the lenghts of previous 2 columns
        */
       if (isFirstRow) {
-        const prevColALength = this.getColumnLength(initialCoordinates[1] - 1)
-        const prevColBLength = this.getColumnLength(initialCoordinates[1] - 2)
+        /**
+         * Get the column exactly to the right
+         */
+        const prevColALength = this.getColumnLength(initialCol - 1)
+
+        /**
+         * Get the 2nd column to the right
+         */
+        const prevColBLength = this.getColumnLength(initialCol - 2)
 
         this.push(prevColALength === prevColBLength ? 'red' : 'blue', {
           big_road_index: col.index
         })
 
         if (nextCoordinates) {
-          initialCoordinates[0] = nextCoordinates[0]
-          initialCoordinates[1] = nextCoordinates[1]
+          initialRow = nextCoordinates[0]
+          initialCol = nextCoordinates[1]
           continue
         } else {
           break
@@ -84,8 +91,8 @@ export default class BigEyeBoy extends Roadmap {
       /**
        * If non first row, check the left col and the upper left column
        */
-      const leftColLower = this.bigRoadMatrix[initialCoordinates[0]][initialCoordinates[1] - 1]
-      const leftColUpper = this.bigRoadMatrix[initialCoordinates[0] - 1][initialCoordinates[1] - 1]
+      const leftColLower = this.bigRoadMatrix[initialRow][initialCol - 1]
+      const leftColUpper = this.bigRoadMatrix[initialRow - 1][initialCol - 1]
 
       const leftColLowerIdentity = this.indentityDictionary[_get(leftColLower, 'value')]
       const leftColUpperIdentity = this.indentityDictionary[_get(leftColUpper, 'value')]
@@ -107,15 +114,13 @@ export default class BigEyeBoy extends Roadmap {
       })
 
       if (nextCoordinates) {
-        initialCoordinates[0] = nextCoordinates[0]
-        initialCoordinates[1] = nextCoordinates[1]
+        initialRow = nextCoordinates[0]
+        initialCol = nextCoordinates[1]
         continue
       } else {
         break
       }
     }
-
-    console.log(this.matrix)
   }
 
   getBigRoadCoordinatesByIndex (index) {
