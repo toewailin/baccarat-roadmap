@@ -6,6 +6,10 @@ module.exports = {
     browser: true
   },
 
+  globals: {
+    define: true
+  },
+
   extends: [
     'eslint:recommended',
     'plugin:vue/essential',
@@ -29,15 +33,19 @@ module.exports = {
     camelcase: 'off',
     'comma-dangle': 'error',
     'default-case': 'error',
+    'vue/custom-event-name-casing': 'off',
     indent: [
       'error',
       2,
       {
-        ignoredNodes: ['TemplateLiteral']
+        ignoredNodes: ['TemplateLiteral'],
+        SwitchCase: 1
       }
     ],
+    'vue/comma-spacing': ['error', { before: false, after: true }],
     'no-alert': 'off',
-    'no-await-in-loop': 'error',
+    eqeqeq: 'off',
+    'no-await-in-loop': 'off',
     'no-console': 'off',
     'no-debugger': 'off',
     'no-else-return': 'error',
@@ -63,7 +71,15 @@ module.exports = {
         multiline: 'always'
       }
     ],
+    'vue/no-unused-properties': ['error', {
+      groups: ['props', 'data', 'computed', 'methods']
+    }],
+    'vue/match-component-file-name': ['error', {
+      extensions: ['vue'],
+      shouldMatchCase: false
+    }],
     'vue/html-end-tags': 'error',
+    'vue/require-default-prop': 'off',
     'vue/html-indent': [
       'error',
       2,
