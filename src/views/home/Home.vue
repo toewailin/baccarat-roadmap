@@ -44,14 +44,13 @@
                 :key="colKey"
                 class="grid__col text-gray-200"
                 :class="{
-                  'bg-red-500': col && col.value === 'p',
-                  'bg-blue-500': col && col.value === 'b',
+                  'bg-red-500': col && col.value === 'b',
+                  'bg-blue-500': col && col.value === 'p',
                   'bg-green-500': col && col.value === 't',
                 }"
               >
                 {{ col ? col.value : '' }}
-                <!-- <p>{{ col?.value || '' }}</p>
-              <small class="text-xs">{{ col.index }}</small> -->
+                <small>{{ col.index }}</small>
               </div>
             </div>
           </div>
@@ -89,7 +88,7 @@
           </div>
           <div class="grid">
             <div
-              v-for="(row, rowKey) in smallroad"
+              v-for="(row, rowKey) in smallroad.matrix"
               :key="rowKey"
               class="grid__row"
             >
@@ -97,8 +96,13 @@
                 v-for="(col, colKey) in row"
                 :key="colKey"
                 class="grid__col"
+                :class="{
+                  'bg-red-500': col && col.value === 'red',
+                  'bg-blue-500': col && col.value === 'blue',
+                }"
               >
-                <!--  -->
+                {{ col ? col.value : '' }}
+                <small>{{ col ? col.big_road_index : '' }}</small>
               </div>
             </div>
           </div>
@@ -151,38 +155,30 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
 import BreadPlate from '@/assets/js/roadmap/BreadPlate'
 import BigRoad from '@/assets/js/roadmap/BigRoad'
 import BigEyeBoy from '@/assets/js/roadmap/BigEyeBoy'
+import SmallRoad from '@/assets/js/roadmap/SmallRoad'
 
 export default {
-  name: "Home",
-  components: {
-    HelloWorld,
-  },
+  name: 'Home',
 
   data () {
     return {
-      smallroad: [
-        Array.from({ length: 13 }),
-        Array.from({ length: 13 }),
-        Array.from({ length: 13 }),
-      ],
+      smallroad: {},
       cockroachPig: [
         Array.from({ length: 13 }),
         Array.from({ length: 13 }),
-        Array.from({ length: 13 }),
+        Array.from({ length: 13 })
       ],
       bigeyeboy: {},
       bigroad: {},
-      breadplate: {},
-    };
+      breadplate: {}
+    }
   },
 
   created () {
-
-    const results = 'bbbbbbbbbppppppbpbpbppppbppbpbpbpbpbpbpbpbpbpbpbppppbpbpbpppbpbpb'.split('')
+    const results = 'bpbbpbbbbpbpbbpppbbbppbpppbbpp'.split('')
 
     this.breadplate = new BreadPlate({
       results,
@@ -199,6 +195,12 @@ export default {
     this.bigeyeboy = new BigEyeBoy({
       bigRoadMatrix: this.bigroad.matrix
     })
+
+    this.smallroad = new SmallRoad({
+      bigRoadMatrix: this.bigroad.matrix,
+      rows: 3,
+      cols: 26
+    })
   },
 
   methods: {
@@ -209,17 +211,20 @@ export default {
       this.bigroad.push(key)
       this.bigroad.__ob__.dep.notify()
 
-      this.bigeyeboy = new BigEyeBoy({
-        bigRoadMatrix: this.bigroad.matrix
-      })
+      this.bigeyeboy.bigRoadMatrix = this.bigroad.matrix
+      this.bigeyeboy.traverseBigRoadScheme()
       this.bigeyeboy.__ob__.dep.notify()
+
+      this.smallroad.bigRoadMatrix = this.bigroad.matrix
+      this.smallroad.traverseBigRoadScheme()
+      this.smallroad.__ob__.dep.notify()
 
       // bigroad.push(key)
 
       // await bigeyeboy.traverseBigRoadScheme()
     }
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
