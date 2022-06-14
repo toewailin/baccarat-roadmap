@@ -7,6 +7,15 @@
             Bread Plate
           </div>
 
+          <RoadmapOptions
+            v-model="config.breadplate"
+            class="roadmap__item--options"
+            @save="
+              initRoadmap(),
+              config.breadplate.show_options = false
+            "
+          />
+
           <div class="grid">
             <div
               v-for="(row, rowKey) in breadplate.matrix"
@@ -23,7 +32,7 @@
                   'bg-green-500': col && col.value === 't',
                 }"
               >
-                <span>{{ col ? col.value : '' }}</span>
+                <small>{{ col.index }}</small>
               </div>
             </div>
           </div>
@@ -33,6 +42,16 @@
           <div class="roadmap__item--title">
             Big Road
           </div>
+
+          <RoadmapOptions
+            v-model="config.bigroad"
+            class="roadmap__item--options"
+            @save="
+              initRoadmap(),
+              config.bigroad.show_options = false
+            "
+          />
+
           <div class="grid">
             <div
               v-for="(row, rowKey) in bigroad.matrix"
@@ -49,7 +68,6 @@
                   'bg-green-500': col && col.value === 't',
                 }"
               >
-                <span>{{ col ? col.value : '' }} {{ col ? col.tie_count : '' }}</span>
                 <small>{{ col.index }}</small>
               </div>
             </div>
@@ -60,6 +78,16 @@
           <div class="roadmap__item--title">
             Big Eye Boy
           </div>
+
+          <RoadmapOptions
+            v-model="config.bigeyeboy"
+            class="roadmap__item--options"
+            @save="
+              initRoadmap(),
+              config.bigeyeboy.show_options = false
+            "
+          />
+
           <div class="grid">
             <div
               v-for="(row, rowKey) in bigeyeboy.matrix"
@@ -75,7 +103,6 @@
                   'bg-blue-500': col && col.value === 'blue',
                 }"
               >
-                <span>{{ col ? col.value : '' }}</span>
                 <small>{{ col.big_road_index }}</small>
               </div>
             </div>
@@ -86,6 +113,16 @@
           <div class="roadmap__item--title">
             Small Road
           </div>
+
+          <RoadmapOptions
+            v-model="config.smallroad"
+            class="roadmap__item--options"
+            @save="
+              initRoadmap(),
+              config.smallroad.show_options = false
+            "
+          />
+
           <div class="grid">
             <div
               v-for="(row, rowKey) in smallroad.matrix"
@@ -101,7 +138,6 @@
                   'bg-blue-500': col && col.value === 'blue',
                 }"
               >
-                <span>{{ col ? col.value : '' }}</span>
                 <small>{{ col ? col.big_road_index : '' }}</small>
               </div>
             </div>
@@ -112,6 +148,16 @@
           <div class="roadmap__item--title">
             Cockroach Pig
           </div>
+
+          <RoadmapOptions
+            v-model="config.cockroachPig"
+            class="roadmap__item--options"
+            @save="
+              initRoadmap(),
+              config.cockroachPig.show_options = false
+            "
+          />
+
           <div class="grid">
             <div
               v-for="(row, rowKey) in cockroachPig.matrix"
@@ -127,7 +173,6 @@
                   'bg-blue-500': col && col.value === 'blue',
                 }"
               >
-                <span>{{ col ? col.value : '' }}</span>
                 <small>{{ col ? col.big_road_index : '' }}</small>
               </div>
             </div>
@@ -137,24 +182,33 @@
     </div>
 
     <div class="actions">
-      <button
-        class="px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full mr-2"
+      <base-button
+        class="bg-blue-500 text-white"
         @click="push('p')"
       >
         Player
-      </button>
-      <button
-        class="px-4 py-2 font-semibold text-sm bg-red-500 text-white rounded-full mr-2"
+      </base-button>
+
+      <base-button
+        class="bg-red-500 text-white"
         @click="push('b')"
       >
         Banker
-      </button>
-      <button
-        class="px-4 py-2 font-semibold text-sm bg-green-500 text-white rounded-full"
+      </base-button>
+
+      <base-button
+        class="bg-green-500 text-white"
         @click="push('t')"
       >
         Tie
-      </button>
+      </base-button>
+
+      <base-button
+        class="bg-white text-black"
+        @click="clearRoadmap"
+      >
+        Clear
+      </base-button>
     </div>
   </div>
 </template>
@@ -167,16 +221,50 @@ import BigEyeBoy from '@/assets/js/roadmap/BigEyeBoy'
 import SmallRoad from '@/assets/js/roadmap/SmallRoad'
 import CockroachPig from '@/assets/js/roadmap/CockroachPig'
 
+import RoadmapOptions from './components/RoadmapOptions.vue'
+
 export default {
   name: 'Home',
 
+  components: {
+    RoadmapOptions
+  },
+
   data () {
     return {
+      results: [],
+      breadplate: {},
+      bigroad: {},
+      bigeyeboy: {},
       smallroad: {},
       cockroachPig: {},
-      bigeyeboy: {},
-      bigroad: {},
-      breadplate: {}
+      config: {
+        breadplate: {
+          show_options: false,
+          rows: 6,
+          cols: 9
+        },
+        bigroad: {
+          show_options: false,
+          rows: 6,
+          cols: 26
+        },
+        bigeyeboy: {
+          show_options: false,
+          rows: 6,
+          cols: 26
+        },
+        smallroad: {
+          show_options: false,
+          rows: 6,
+          cols: 19
+        },
+        cockroachPig: {
+          show_options: false,
+          rows: 6,
+          cols: 19
+        }
+      }
     }
   },
 
@@ -185,37 +273,40 @@ export default {
   },
 
   methods: {
-    initRoadmap () {
-      const results = ''.split('')
+    clearRoadmap () {
+      this.results = []
+      this.initRoadmap()
+    },
 
+    initRoadmap () {
       this.breadplate = new BreadPlate({
-        results,
-        rows: 6,
-        cols: 9
+        results: this.results,
+        rows: this.config.breadplate.rows,
+        cols: this.config.breadplate.cols
       })
 
       this.bigroad = new BigRoad({
-        results,
-        rows: 6,
-        cols: 26
+        results: this.results,
+        rows: this.config.bigroad.rows,
+        cols: this.config.bigroad.cols
       })
 
       this.bigeyeboy = new BigEyeBoy({
         bigRoadMatrix: this.bigroad.matrix,
-        rows: 6,
-        cols: 26
+        rows: this.config.bigeyeboy.rows,
+        cols: this.config.bigeyeboy.cols
       })
 
       this.smallroad = new SmallRoad({
         bigRoadMatrix: this.bigroad.matrix,
-        rows: 6,
-        cols: 19
+        rows: this.config.smallroad.rows,
+        cols: this.config.smallroad.cols
       })
 
       this.cockroachPig = new CockroachPig({
         bigRoadMatrix: this.bigroad.matrix,
-        rows: 6,
-        cols: 19
+        rows: this.config.cockroachPig.rows,
+        cols: this.config.cockroachPig.cols
       })
     },
 

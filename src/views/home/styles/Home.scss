@@ -4,16 +4,12 @@
   padding: 20px;
 
   .roadmap-container {
-    grid-row-start: 1;
-    grid-row-end: 3;
+    margin-bottom: 20px;
   }
 
   .roadmap {
     $roadmap-border: 10px solid theme("colors.gray.900");
 
-    margin-bottom: 20px;
-    width: 100%;
-    height: 100%;
     display: grid;
     border-top: $roadmap-border;
     border-left: $roadmap-border;
@@ -30,13 +26,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 2em;
+      font-size: pxToRem(32);
       font-weight: bold;
       background-color: rgba(0, 0, 0, 0.7);
       opacity: 0;
       border: 1px solid theme("colors.blue.500");
       transition: 200ms ease;
       transition-property: opacity, border-color;
+    }
+
+    .roadmap__item--options {
+      position: absolute;
     }
 
     .roadmap__item--bread-plate,
@@ -70,7 +70,7 @@
       grid-area: bigRoad;
 
       .grid__col {
-        height: 40px;
+        height: 30px;
         min-width: 50px;
         width: 50px;
       }
@@ -82,7 +82,7 @@
       grid-area: bigEyeBoy;
 
       .grid__col {
-        height: 40px;
+        height: 30px;
         min-width: 50px;
         width: 50px;
       }
@@ -94,7 +94,7 @@
       grid-area: smallRoad;
 
       .grid__col {
-        height: 40px;
+        height: 30px;
         min-width: 35px;
         width: 35px;
       }
@@ -106,7 +106,7 @@
       grid-area: cockroachPig;
 
       .grid__col {
-        height: 40px;
+        height: 30px;
         min-width: 35px;
         width: 35px;
       }
@@ -143,12 +143,12 @@
         flex-direction: column;
 
         span {
-          font-size: 13px;
+          font-size: pxToRem(13);
           margin-bottom: 5px;
         }
 
         small {
-          font-size: 10px;
+          font-size: pxToRem(10);
         }
 
         &:not(:last-child) {
@@ -160,5 +160,10 @@
         }
       }
     }
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
   }
 }
