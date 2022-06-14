@@ -185,7 +185,7 @@ export default {
 
   methods: {
     initRoadmap () {
-      const results = 'bpbbpbbbbpbpbbpppbbbppbpppbb'.split('')
+      const results = ''.split('')
 
       this.breadplate = new BreadPlate({
         results,
