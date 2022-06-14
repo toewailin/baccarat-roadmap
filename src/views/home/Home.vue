@@ -23,7 +23,7 @@
                   'bg-green-500': col && col.value === 't',
                 }"
               >
-                {{ col ? col.value : '' }}
+                <span>{{ col ? col.value : '' }}</span>
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@
                   'bg-blue-500': col && col.value === 'blue',
                 }"
               >
-                {{ col ? col.value : '' }}
+                <span>{{ col ? col.value : '' }}</span>
                 <small>{{ col.big_road_index }}</small>
               </div>
             </div>
@@ -101,7 +101,7 @@
                   'bg-blue-500': col && col.value === 'blue',
                 }"
               >
-                {{ col ? col.value : '' }}
+                <span>{{ col ? col.value : '' }}</span>
                 <small>{{ col ? col.big_road_index : '' }}</small>
               </div>
             </div>
@@ -127,7 +127,7 @@
                   'bg-blue-500': col && col.value === 'blue',
                 }"
               >
-                {{ col ? col.value : '' }}
+                <span>{{ col ? col.value : '' }}</span>
                 <small>{{ col ? col.big_road_index : '' }}</small>
               </div>
             </div>
@@ -135,6 +135,7 @@
         </div>
       </div>
     </div>
+
     <div class="actions">
       <button
         class="px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full mr-2"
