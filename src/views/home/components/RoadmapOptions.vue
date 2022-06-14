@@ -17,15 +17,15 @@
       </template>
 
       <base-input
-        v-model="config.rows"
+        v-model.number="config.rows"
         label="Rows"
-        type="number"
+        type="search"
       />
 
       <base-input
-        v-model="config.cols"
+        v-model.number="config.cols"
         label="Cols"
-        type="number"
+        type="search"
       />
 
       <template #footer>

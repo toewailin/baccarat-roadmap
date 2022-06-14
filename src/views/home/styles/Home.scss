@@ -72,7 +72,7 @@
       grid-area: bigRoad;
 
       .grid__col {
-        height: 30px;
+        min-height: 30px;
         min-width: 50px;
         width: 50px;
       }
@@ -84,7 +84,7 @@
       grid-area: bigEyeBoy;
 
       .grid__col {
-        height: 30px;
+        min-height: 30px;
         min-width: 50px;
         width: 50px;
       }
@@ -96,7 +96,7 @@
       grid-area: smallRoad;
 
       .grid__col {
-        height: 30px;
+        min-height: 30px;
         min-width: 35px;
         width: 35px;
       }
@@ -108,7 +108,7 @@
       grid-area: cockroachPig;
 
       .grid__col {
-        height: 30px;
+        min-height: 30px;
         min-width: 35px;
         width: 35px;
       }
