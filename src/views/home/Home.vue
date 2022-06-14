@@ -200,7 +200,9 @@ export default {
       })
 
       this.bigeyeboy = new BigEyeBoy({
-        bigRoadMatrix: this.bigroad.matrix
+        bigRoadMatrix: this.bigroad.matrix,
+        rows: 6,
+        cols: 26
       })
 
       this.smallroad = new SmallRoad({
