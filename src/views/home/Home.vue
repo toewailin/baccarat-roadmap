@@ -114,7 +114,7 @@
           </div>
           <div class="grid">
             <div
-              v-for="(row, rowKey) in cockroachPig"
+              v-for="(row, rowKey) in cockroachPig.matrix"
               :key="rowKey"
               class="grid__row"
             >
@@ -122,8 +122,13 @@
                 v-for="(col, colKey) in row"
                 :key="colKey"
                 class="grid__col"
+                :class="{
+                  'bg-red-500': col && col.value === 'red',
+                  'bg-blue-500': col && col.value === 'blue',
+                }"
               >
-                <!--  -->
+                {{ col ? col.value : '' }}
+                <small>{{ col ? col.big_road_index : '' }}</small>
               </div>
             </div>
           </div>
@@ -159,6 +164,7 @@ import BreadPlate from '@/assets/js/roadmap/BreadPlate'
 import BigRoad from '@/assets/js/roadmap/BigRoad'
 import BigEyeBoy from '@/assets/js/roadmap/BigEyeBoy'
 import SmallRoad from '@/assets/js/roadmap/SmallRoad'
+import CockroachPig from '@/assets/js/roadmap/CockroachPig'
 
 export default {
   name: 'Home',
@@ -166,11 +172,7 @@ export default {
   data () {
     return {
       smallroad: {},
-      cockroachPig: [
-        Array.from({ length: 13 }),
-        Array.from({ length: 13 }),
-        Array.from({ length: 13 })
-      ],
+      cockroachPig: {},
       bigeyeboy: {},
       bigroad: {},
       breadplate: {}
@@ -178,32 +180,42 @@ export default {
   },
 
   created () {
-    const results = 'bpbbpbbbbpbpbbpppbbbppbpppbbpp'.split('')
-
-    this.breadplate = new BreadPlate({
-      results,
-      rows: 6,
-      cols: 9
-    })
-
-    this.bigroad = new BigRoad({
-      results,
-      rows: 6,
-      cols: 26
-    })
-
-    this.bigeyeboy = new BigEyeBoy({
-      bigRoadMatrix: this.bigroad.matrix
-    })
-
-    this.smallroad = new SmallRoad({
-      bigRoadMatrix: this.bigroad.matrix,
-      rows: 3,
-      cols: 26
-    })
+    this.initRoadmap()
   },
 
   methods: {
+    initRoadmap () {
+      const results = 'bpbbpbbbbpbpbbpppbbbppbpppbb'.split('')
+
+      this.breadplate = new BreadPlate({
+        results,
+        rows: 6,
+        cols: 9
+      })
+
+      this.bigroad = new BigRoad({
+        results,
+        rows: 6,
+        cols: 26
+      })
+
+      this.bigeyeboy = new BigEyeBoy({
+        bigRoadMatrix: this.bigroad.matrix
+      })
+
+      this.smallroad = new SmallRoad({
+        bigRoadMatrix: this.bigroad.matrix,
+        rows: 3,
+        cols: 19
+      })
+
+      this.cockroachPig = new CockroachPig({
+        bigRoadMatrix: this.bigroad.matrix,
+        rows: 3,
+        cols: 19
+      })
+    },
+
     push (key) {
       this.breadplate.push(key)
       this.breadplate.__ob__.dep.notify()
@@ -219,9 +231,9 @@ export default {
       this.smallroad.traverseBigRoadScheme()
       this.smallroad.__ob__.dep.notify()
 
-      // bigroad.push(key)
-
-      // await bigeyeboy.traverseBigRoadScheme()
+      this.cockroachPig.bigRoadMatrix = this.bigroad.matrix
+      this.cockroachPig.traverseBigRoadScheme()
+      this.cockroachPig.__ob__.dep.notify()
     }
   }
 }
