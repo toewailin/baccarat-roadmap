@@ -4,7 +4,7 @@
       src="@/assets/images/setting.png"
       alt=""
       class="cursor-pointer"
-      @click="config.show_options = 1"
+      @click.stop="config.show_options = 1"
     >
 
     <base-card
@@ -78,7 +78,7 @@ export default {
     height: 25px;
     margin: 10px;
     z-index: 1;
-    opacity: 0.5;
+    opacity: 0.3;
     transition: 100ms ease opacity;
 
     &:hover {
