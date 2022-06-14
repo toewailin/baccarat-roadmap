@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "autoprefixer": "^9.8.8",
@@ -31,6 +33,7 @@
     "eslint-plugin-vue": "^7.20.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
+    "vitest": "^0.14.2",
     "vue-eslint-parser": "^7.0.0",
     "vue-template-compiler": "^2.6.11"
   }
