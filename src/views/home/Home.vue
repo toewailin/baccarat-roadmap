@@ -18,8 +18,8 @@
                 :key="colKey"
                 class="grid__col text-gray-200"
                 :class="{
-                  'bg-red-500': col && col.value === 'p',
-                  'bg-blue-500': col && col.value === 'b',
+                  'bg-red-500': col && col.value === 'b',
+                  'bg-blue-500': col && col.value === 'p',
                   'bg-green-500': col && col.value === 't',
                 }"
               >
