@@ -106,7 +106,7 @@
 
       .grid__col {
         padding: 5px;
-        min-height: 39px;
+        min-height: 20px;
         min-width: 30px;
         flex-grow: 1;
         flex-shrink: 0;
@@ -115,6 +115,7 @@
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        font-size: 0.6em;
 
         &:not(:last-child) {
           border-right: $grid-border;
