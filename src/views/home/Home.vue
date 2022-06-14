@@ -207,13 +207,13 @@ export default {
 
       this.smallroad = new SmallRoad({
         bigRoadMatrix: this.bigroad.matrix,
-        rows: 3,
+        rows: 6,
         cols: 19
       })
 
       this.cockroachPig = new CockroachPig({
         bigRoadMatrix: this.bigroad.matrix,
-        rows: 3,
+        rows: 6,
         cols: 19
       })
     },
