@@ -49,7 +49,7 @@
                   'bg-green-500': col && col.value === 't',
                 }"
               >
-                {{ col ? col.value : '' }} {{ col ? col.tie_count : '' }}
+                <span>{{ col ? col.value : '' }} {{ col ? col.tie_count : '' }}</span>
                 <small>{{ col.index }}</small>
               </div>
             </div>
@@ -137,13 +137,13 @@
     </div>
     <div class="actions">
       <button
-        class="px-4 py-2 font-semibold text-sm bg-red-500 text-white rounded-full mr-2"
+        class="px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full mr-2"
         @click="push('p')"
       >
         Player
       </button>
       <button
-        class="px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full mr-2"
+        class="px-4 py-2 font-semibold text-sm bg-red-500 text-white rounded-full mr-2"
         @click="push('b')"
       >
         Banker
