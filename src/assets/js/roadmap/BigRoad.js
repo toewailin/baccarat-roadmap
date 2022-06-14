@@ -89,19 +89,34 @@ export default class BigRoad extends Roadmap {
       return console.warn(`${key} is not a valid key.`)
     }
 
-    const [row, column] = this.getNextCoordinate(identity)
+    const isTie = this.tieIdentities.includes(key)
 
-    this.previousCoordinates = [row, column]
+    const [nextRow, nextCol] = this.getNextCoordinate(identity)
+    const [prevRow, prevCol] = JSON.parse(JSON.stringify(this.previousCoordinates))
+
+    const prevColValue = _get(this.matrix[prevRow][prevCol], 'value')
+    const isAnotherTie = isTie && this.tieIdentities.includes(prevColValue)
+
+    /**
+     * If previous col is tie and the current identity
+     * is also tie
+     */
+    if (isAnotherTie) {
+      return this.matrix[prevRow][prevCol].tie_count++
+    }
+
+    this.previousCoordinates = [nextRow, nextCol]
     this.previousIdentity = identity
 
-    this.matrix[row][column] = {
+    this.matrix[nextRow][nextCol] = {
       value: key,
-      index: this.index++
+      index: this.index++,
+      tie_count: isTie ? 1 : 0
     }
 
     if (this.hasFullRow) {
       this.matrix = this.truncateFirstColumn()
-      this.previousCoordinates = [row, column - 1]
+      this.previousCoordinates = [nextRow, nextCol - 1]
     }
   }
 }

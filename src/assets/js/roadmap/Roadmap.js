@@ -20,19 +20,19 @@ module.exports = class Roadmap {
     }
   }
 
-  get bankerKeys () {
+  get bankerIdentities () {
     return Object.entries(this.indentityDictionary)
       .filter(x => x[1] === 'banker')
       .map(x => x[0])
   }
 
-  get playerKeys () {
+  get playerIdentities () {
     return Object.entries(this.indentityDictionary)
       .filter(x => x[1] === 'player')
       .map(x => x[0])
   }
 
-  get tieKeys () {
+  get tieIdentities () {
     return Object.entries(this.indentityDictionary)
       .filter(x => x[1] === 'tie')
       .map(x => x[0])

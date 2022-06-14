@@ -49,7 +49,7 @@
                   'bg-green-500': col && col.value === 't',
                 }"
               >
-                {{ col ? col.value : '' }}
+                {{ col ? col.value : '' }} {{ col ? col.tie_count : '' }}
                 <small>{{ col.index }}</small>
               </div>
             </div>
