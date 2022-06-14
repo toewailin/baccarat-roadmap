@@ -1,19 +1,8 @@
-# roadmap
+# Baccarat Roadmap
+
+The baccarat roadmap is a graphical representation of the results of the previous rounds of a baccarat game. It helps the players quickly and easily analyze the history of the game, look for trends, and possibly predict the results in the future
 
 ## Project setup
 ```
-pnpm install
+npm install
 ```
-
-### Compiles and hot-reloads for development
-```
-pnpm run serve
-```
-
-### Compiles and minifies for production
-```
-pnpm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
