@@ -1,12 +1,15 @@
 <template>
-  <div class="base-card">
+  <div
+    v-base-click-outside="emitClose"
+    class="base-card"
+  >
     <div class="card__title">
       <slot name="title"></slot>
 
       <span
         v-if="!showCloseBtn"
         class="cursor-pointer text-red-500"
-        @click="$emit('close', true)"
+        @click="emitClose"
       >🞬</span>
     </div>
 
@@ -27,13 +30,19 @@ export default {
       type: [Boolean, Number],
       default: false
     }
+  },
+
+  methods: {
+    emitClose () {
+      this.$emit('close', true)
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
 .base-card {
+  @apply shadow-lg;
   background-color: rgba(64, 64, 64, 0.5);
-  border: 1px solid rgba(64, 64, 64, 0.8);
   backdrop-filter: blur(5px);
   top: 10px;
   right: 10px;
