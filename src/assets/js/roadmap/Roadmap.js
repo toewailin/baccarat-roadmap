@@ -1,4 +1,4 @@
-module.exports = class Roadmap {
+export default class Roadmap {
   constructor () {
     this.indentityDictionary = {
       b: 'banker', // banker
