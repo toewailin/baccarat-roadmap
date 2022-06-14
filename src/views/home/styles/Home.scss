@@ -3,7 +3,9 @@
   width: 100%;
   padding: 20px;
 
-  .roadmap-container {
+  .actions {
+    display: flex;
+    gap: 10px;
     margin-bottom: 20px;
   }
 
@@ -160,10 +162,5 @@
         }
       }
     }
-  }
-
-  .actions {
-    display: flex;
-    gap: 10px;
   }
 }

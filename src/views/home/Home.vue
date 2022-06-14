@@ -1,5 +1,35 @@
 <template>
   <div class="home">
+    <div class="actions">
+      <base-button
+        class="bg-blue-500 text-white"
+        @click="push('p')"
+      >
+        Player
+      </base-button>
+
+      <base-button
+        class="bg-red-500 text-white"
+        @click="push('b')"
+      >
+        Banker
+      </base-button>
+
+      <base-button
+        class="bg-green-500 text-white"
+        @click="push('t')"
+      >
+        Tie
+      </base-button>
+
+      <base-button
+        class="bg-white text-black"
+        @click="clearRoadmap"
+      >
+        Clear
+      </base-button>
+    </div>
+
     <div class="roadmap-container">
       <div class="roadmap">
         <div class="roadmap__item roadmap__item--bread-plate">
@@ -179,36 +209,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="actions">
-      <base-button
-        class="bg-blue-500 text-white"
-        @click="push('p')"
-      >
-        Player
-      </base-button>
-
-      <base-button
-        class="bg-red-500 text-white"
-        @click="push('b')"
-      >
-        Banker
-      </base-button>
-
-      <base-button
-        class="bg-green-500 text-white"
-        @click="push('t')"
-      >
-        Tie
-      </base-button>
-
-      <base-button
-        class="bg-white text-black"
-        @click="clearRoadmap"
-      >
-        Clear
-      </base-button>
     </div>
   </div>
 </template>
