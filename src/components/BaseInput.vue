@@ -41,7 +41,6 @@ export default {
 <style lang="scss" scoped>
 .input-form {
   display: block;
-  margin-bottom: 10px;
 
   label {
     display: block;

@@ -56,7 +56,7 @@ export default {
   }
 
   .card__footer {
-    margin-top: auto;
+    margin-top: 10px;
     display: flex;
     justify-content: flex-end;
   }
