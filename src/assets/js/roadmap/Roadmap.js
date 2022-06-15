@@ -10,6 +10,7 @@ function attachToContext (obj, ctx) {
     ctx[key] = obj[key]
   }
 }
+
 export default class Roadmap {
   constructor (_options) {
     const options = _defaultsDeep(_options, {

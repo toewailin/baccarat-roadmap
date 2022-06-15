@@ -258,8 +258,8 @@ export default class BigEyeBoy extends RoadmapUtilities {
       big_road_index: options.big_road_index
     }
 
-    if (this._hasFullRow) {
-      this.matrix = this._truncateFirstColumn()
+    if (this.hasFullRow) {
+      this.matrix = this.truncateFirstColumn()
       this.previousCoordinates = [row, column - 1]
     }
   }

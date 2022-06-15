@@ -76,8 +76,8 @@ export default class BreadPlate extends RoadmapUtilities {
       index: this.index++
     }
 
-    if (this._hasFullRow) {
-      this.matrix = this._truncateFirstColumn()
+    if (this.hasFullRow) {
+      this.matrix = this.truncateFirstColumn()
       this.previousCoordinates = [row, column - 1]
     }
   }

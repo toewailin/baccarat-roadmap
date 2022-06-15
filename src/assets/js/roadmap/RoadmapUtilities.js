@@ -41,7 +41,7 @@ export default class Roadmap {
   /**
    * Used as utility getter for sub classes
    */
-  get _hasFullRow () {
+  get hasFullRow () {
     return this.matrix.some(row => {
       return !!row[this.cols - 1]
     })
@@ -50,7 +50,7 @@ export default class Roadmap {
   /**
    * Used as utility getter for sub classes
    */
-  _truncateFirstColumn () {
+  truncateFirstColumn () {
     const tail = ([, ...t]) => t
 
     return this.matrix.map(row => {
@@ -69,7 +69,7 @@ export default class Roadmap {
   /**
    * Used as utility getter for sub classes
    */
-  get _getLastColumn () {
+  get getLastColumn () {
     const [prevRow, prevCol] = this.previousCoordinates
 
     return this.matrix[prevRow][prevCol] || null

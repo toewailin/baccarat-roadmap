@@ -115,8 +115,8 @@ export default class BigRoad extends RoadmapUtilities {
       tie_count: isTie ? 1 : 0
     }
 
-    if (this._hasFullRow) {
-      this.matrix = this._truncateFirstColumn()
+    if (this.hasFullRow) {
+      this.matrix = this.truncateFirstColumn()
       this.previousCoordinates = [nextRow, nextCol - 1]
     }
   }
