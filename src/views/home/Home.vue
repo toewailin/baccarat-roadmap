@@ -281,12 +281,36 @@ export default {
     }
   },
 
+  watch: {
+    config: {
+      handler (val) {
+        localStorage.setItem('roadmap-config', JSON.stringify(val))
+      },
+      deep: true
+    }
+  },
+
   created () {
+    this.initLocalConfig()
     this.roadmapUtils = new RoadmapUtilities()
     this.initRoadmap()
   },
 
   methods: {
+    initLocalConfig () {
+      const localConfig = localStorage.getItem('roadmap-config')
+
+      if (localConfig) {
+        this.config = (() => {
+          try {
+            return JSON.parse(localConfig)
+          } catch (error) {
+            return this.config
+          }
+        })()
+      }
+    },
+
     clearRoadmap () {
       this.results = []
       this.initRoadmap()
