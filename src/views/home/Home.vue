@@ -91,10 +91,7 @@
           <RoadmapOptions
             v-model="config.bigroad"
             class="roadmap__item--options"
-            @save="
-              initRoadmap(),
-              config.bigroad.show_options = false
-            "
+            @save="saveConfig('bigroad')"
           />
 
           <div class="grid">
@@ -127,10 +124,7 @@
           <RoadmapOptions
             v-model="config.bigeyeboy"
             class="roadmap__item--options"
-            @save="
-              initRoadmap(),
-              config.bigeyeboy.show_options = false
-            "
+            @save="saveConfig('bigeyeboy')"
           />
 
           <div class="grid">
@@ -162,10 +156,7 @@
           <RoadmapOptions
             v-model="config.smallroad"
             class="roadmap__item--options"
-            @save="
-              initRoadmap(),
-              config.smallroad.show_options = false
-            "
+            @save="saveConfig('smallroad')"
           />
 
           <div class="grid">
@@ -197,10 +188,7 @@
           <RoadmapOptions
             v-model="config.cockroachPig"
             class="roadmap__item--options"
-            @save="
-              initRoadmap(),
-              config.cockroachPig.show_options = false
-            "
+            @save="saveConfig('cockroachPig')"
           />
 
           <div class="grid">
