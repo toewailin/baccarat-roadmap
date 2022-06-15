@@ -1,62 +1,95 @@
+import _defaultsDeep from 'lodash/defaultsDeep'
+import BreadPlate from './BreadPlate'
+import BigRoad from './BigRoad'
+import BigEyeBoy from './BigEyeBoy'
+import SmallRoad from './SmallRoad'
+import CockroachPig from './CockroachPig'
+
+function attachToContext (obj, ctx) {
+  for (const key in obj) {
+    ctx[key] = obj[key]
+  }
+}
 export default class Roadmap {
-  constructor () {
-    this.indentityDictionary = {
-      b: 'banker', // banker
-      p: 'player', // player
-      t: 'tie', // tie
-      q: 'banker', // banker banker-pair
-      w: 'banker', // banker banker-pair player-pair
-      e: 'banker', // banker player-pair
-      f: 'player', // player banker-pair
-      g: 'player', // player banker-pair player-pair
-      h: 'player', // player player-pair
-      i: 'tie', // tie banker-pair
-      j: 'tie', // tie banker-pair player-pair
-      k: 'tie', // tie player-pair
-      l: 'banker', // banker
-      m: 'banker', // banker banker-pair
-      n: 'banker', // banker banker-pair player-pair
-      o: 'banker' // banker player-pair
-    }
-  }
+  constructor (_options) {
+    const options = _defaultsDeep(_options, {
+      results: [],
+      config: {
+        breadplate: {
+          show_options: false,
+          rows: 6,
+          cols: 9
+        },
+        bigroad: {
+          show_options: false,
+          rows: 6,
+          cols: 26
+        },
+        bigeyeboy: {
+          show_options: false,
+          rows: 6,
+          cols: 26
+        },
+        smallroad: {
+          show_options: false,
+          rows: 6,
+          cols: 19
+        },
+        cockroachPig: {
+          show_options: false,
+          rows: 6,
+          cols: 19
+        }
+      }
+    })
 
-  get bankerIdentities () {
-    return Object.entries(this.indentityDictionary)
-      .filter(x => x[1] === 'banker')
-      .map(x => x[0])
-  }
+    attachToContext(options, this)
 
-  get playerIdentities () {
-    return Object.entries(this.indentityDictionary)
-      .filter(x => x[1] === 'player')
-      .map(x => x[0])
-  }
+    this.breadplate = new BreadPlate({
+      results: this.results,
+      rows: this.config.breadplate.rows,
+      cols: this.config.breadplate.cols
+    })
 
-  get tieIdentities () {
-    return Object.entries(this.indentityDictionary)
-      .filter(x => x[1] === 'tie')
-      .map(x => x[0])
-  }
+    this.bigroad = new BigRoad({
+      results: this.results,
+      rows: this.config.bigroad.rows,
+      cols: this.config.bigroad.cols
+    })
 
-  get hasFullRow () {
-    return this.matrix.some(row => {
-      return !!row[this.cols - 1]
+    this.bigeyeboy = new BigEyeBoy({
+      bigRoadMatrix: this.bigroad.matrix,
+      rows: this.config.bigeyeboy.rows,
+      cols: this.config.bigeyeboy.cols
+    })
+
+    this.smallroad = new SmallRoad({
+      bigRoadMatrix: this.bigroad.matrix,
+      rows: this.config.smallroad.rows,
+      cols: this.config.smallroad.cols
+    })
+
+    this.cockroachPig = new CockroachPig({
+      bigRoadMatrix: this.bigroad.matrix,
+      rows: this.config.cockroachPig.rows,
+      cols: this.config.cockroachPig.cols
     })
   }
 
-  truncateFirstColumn () {
-    const tail = ([, ...t]) => t
+  push (key) {
+    this.results.push(key)
 
-    return this.matrix.map(row => {
-      return [...tail(row), 0]
-    })
-  }
+    this.breadplate.push(key)
 
-  get roadmap () {
-    return this.matrix.map(row => {
-      return row.map(col => {
-        return col ? col.value : 0
-      })
-    })
+    this.bigroad.push(key)
+
+    this.bigeyeboy.bigRoadMatrix = this.bigroad.matrix
+    this.bigeyeboy.traverseBigRoadScheme()
+
+    this.smallroad.bigRoadMatrix = this.bigroad.matrix
+    this.smallroad.traverseBigRoadScheme()
+
+    this.cockroachPig.bigRoadMatrix = this.bigroad.matrix
+    this.cockroachPig.traverseBigRoadScheme()
   }
 }

@@ -1,21 +1,22 @@
-import Roadmap from './Roadmap'
+import RoadmapUtilities from './RoadmapUtilities'
 
 import _get from 'lodash/get'
 import _findLastIndex from 'lodash/findLastIndex'
+import _defaultsDeep from 'lodash/defaultsDeep'
 
-export default class BigEyeBoy extends Roadmap {
+export default class BigEyeBoy extends RoadmapUtilities {
   constructor (_options) {
     super()
 
-    const options = {
+    const options = _defaultsDeep(_options, {
       results: [],
       rows: 6,
       cols: 9,
       bigRoadMatrix: []
-    }
+    })
 
     for (const key in options) {
-      this[key] = _options[key] || options[key]
+      this[key] = options[key]
     }
 
     this.traverseBigRoadScheme()
@@ -93,8 +94,8 @@ export default class BigEyeBoy extends Roadmap {
       const leftColLower = this.bigRoadMatrix[initialRow][initialCol - 2]
       const leftColUpper = this.bigRoadMatrix[initialRow - 1][initialCol - 2]
 
-      const leftColLowerIdentity = this.indentityDictionary[_get(leftColLower, 'value')]
-      const leftColUpperIdentity = this.indentityDictionary[_get(leftColUpper, 'value')]
+      const leftColLowerIdentity = this.identityDictionary[_get(leftColLower, 'value')]
+      const leftColUpperIdentity = this.identityDictionary[_get(leftColUpper, 'value')]
 
       const isMatch = [
         /**
@@ -140,7 +141,7 @@ export default class BigEyeBoy extends Roadmap {
   getColumnLength (columnIdx) {
     const coordinates = [0, columnIdx]
     const column = this.bigRoadMatrix[coordinates[0]][coordinates[1]]
-    const rootIdentity = this.indentityDictionary[column.value]
+    const rootIdentity = this.identityDictionary[column.value]
 
     /**
      * If initial column is empty, return 0
@@ -163,7 +164,7 @@ export default class BigEyeBoy extends Roadmap {
       const bottomCol = _get(this.bigRoadMatrix, [coordinates[0] + 1, coordinates[1]], {})
       if (
         bottomCol.index === lastIndex + 1 &&
-        rootIdentity === this.indentityDictionary[bottomCol.value]
+        rootIdentity === this.identityDictionary[bottomCol.value]
       ) {
         lastIndex = bottomCol.index
         traversalCount++
@@ -177,7 +178,7 @@ export default class BigEyeBoy extends Roadmap {
       const rightCol = _get(this.bigRoadMatrix, [coordinates[0], coordinates[1] + 1], {})
       if (
         rightCol.index === lastIndex + 1 &&
-        rootIdentity === this.indentityDictionary[rightCol.value]
+        rootIdentity === this.identityDictionary[rightCol.value]
       ) {
         lastIndex = rightCol.index
         traversalCount++
@@ -256,8 +257,8 @@ export default class BigEyeBoy extends Roadmap {
       big_road_index: options.big_road_index
     }
 
-    if (this.hasFullRow) {
-      this.matrix = this.truncateFirstColumn()
+    if (this._hasFullRow) {
+      this.matrix = this._truncateFirstColumn()
       this.previousCoordinates = [row, column - 1]
     }
   }

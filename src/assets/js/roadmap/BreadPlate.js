@@ -1,19 +1,20 @@
-import Roadmap from './Roadmap'
+import RoadmapUtilities from './RoadmapUtilities'
 
 import _get from 'lodash/get'
+import _defaultsDeep from 'lodash/defaultsDeep'
 
-export default class BreadPlate extends Roadmap {
+export default class BreadPlate extends RoadmapUtilities {
   constructor (_options) {
     super()
 
-    const options = {
+    const options = _defaultsDeep(_options, {
       results: [],
       rows: 6,
       cols: 9
-    }
+    })
 
     for (const key in options) {
-      this[key] = _options[key] || options[key]
+      this[key] = options[key]
     }
 
     /**
@@ -59,7 +60,7 @@ export default class BreadPlate extends Roadmap {
   }
 
   push (key) {
-    const identity = this.indentityDictionary[key]
+    const identity = this.identityDictionary[key]
 
     if (!identity) {
       return console.warn(`${key} is not a valid key.`)
@@ -75,8 +76,8 @@ export default class BreadPlate extends Roadmap {
       index: this.index++
     }
 
-    if (this.hasFullRow) {
-      this.matrix = this.truncateFirstColumn()
+    if (this._hasFullRow) {
+      this.matrix = this._truncateFirstColumn()
       this.previousCoordinates = [row, column - 1]
     }
   }

@@ -1,23 +1,24 @@
-import Roadmap from './Roadmap'
+import RoadmapUtilities from './RoadmapUtilities'
 
 import _findLastIndex from 'lodash/findLastIndex'
+import _defaultsDeep from 'lodash/defaultsDeep'
 import _get from 'lodash/get'
 
-export default class BigRoad extends Roadmap {
+export default class BigRoad extends RoadmapUtilities {
   constructor (_options) {
     super()
 
     /**
      * Define options
      */
-    const options = {
+    const options = _defaultsDeep(_options, {
       results: [],
       rows: 6,
       cols: 26
-    }
+    })
 
     for (const key in options) {
-      this[key] = _options[key] || options[key]
+      this[key] = options[key]
     }
 
     /**
@@ -83,7 +84,7 @@ export default class BigRoad extends Roadmap {
   }
 
   push (key) {
-    const identity = this.indentityDictionary[key]
+    const identity = this.identityDictionary[key]
 
     if (!identity) {
       return console.warn(`${key} is not a valid key.`)
@@ -114,8 +115,8 @@ export default class BigRoad extends Roadmap {
       tie_count: isTie ? 1 : 0
     }
 
-    if (this.hasFullRow) {
-      this.matrix = this.truncateFirstColumn()
+    if (this._hasFullRow) {
+      this.matrix = this._truncateFirstColumn()
       this.previousCoordinates = [nextRow, nextCol - 1]
     }
   }
