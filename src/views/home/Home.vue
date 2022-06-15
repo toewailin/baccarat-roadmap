@@ -30,8 +30,26 @@
       </base-button>
     </div>
 
+    <div class="actions">
+      <base-input
+        v-model="manualMarks"
+        label="Marks"
+        type="search"
+      />
+
+      <base-button
+        class="bg-blue-500"
+        @click="saveManualResult"
+      >
+        Save
+      </base-button>
+    </div>
+
     <div class="roadmap-container">
-      <div class="roadmap">
+      <div
+        v-if="roadmap"
+        class="roadmap"
+      >
         <div class="roadmap__item roadmap__item--bread-plate">
           <div class="roadmap__item--title">
             Bread Plate
@@ -40,15 +58,12 @@
           <RoadmapOptions
             v-model="config.breadplate"
             class="roadmap__item--options"
-            @save="
-              initRoadmap(),
-              config.breadplate.show_options = false
-            "
+            @save="saveConfig('breadplate')"
           />
 
           <div class="grid">
             <div
-              v-for="(row, rowKey) in breadplate.matrix"
+              v-for="(row, rowKey) in roadmap.breadplate.matrix"
               :key="rowKey"
               class="grid__row"
             >
@@ -84,7 +99,7 @@
 
           <div class="grid">
             <div
-              v-for="(row, rowKey) in bigroad.matrix"
+              v-for="(row, rowKey) in roadmap.bigroad.matrix"
               :key="rowKey"
               class="grid__row"
             >
@@ -120,7 +135,7 @@
 
           <div class="grid">
             <div
-              v-for="(row, rowKey) in bigeyeboy.matrix"
+              v-for="(row, rowKey) in roadmap.bigeyeboy.matrix"
               :key="rowKey"
               class="grid__row"
             >
@@ -155,7 +170,7 @@
 
           <div class="grid">
             <div
-              v-for="(row, rowKey) in smallroad.matrix"
+              v-for="(row, rowKey) in roadmap.smallroad.matrix"
               :key="rowKey"
               class="grid__row"
             >
@@ -190,7 +205,7 @@
 
           <div class="grid">
             <div
-              v-for="(row, rowKey) in cockroachPig.matrix"
+              v-for="(row, rowKey) in roadmap.cockroachPig.matrix"
               :key="rowKey"
               class="grid__row"
             >
@@ -215,11 +230,8 @@
 
 <script>
 // @ is an alias to /src
-import BreadPlate from '@/assets/js/roadmap/BreadPlate'
-import BigRoad from '@/assets/js/roadmap/BigRoad'
-import BigEyeBoy from '@/assets/js/roadmap/BigEyeBoy'
-import SmallRoad from '@/assets/js/roadmap/SmallRoad'
-import CockroachPig from '@/assets/js/roadmap/CockroachPig'
+import Roadmap from '@/assets/js/roadmap/Roadmap'
+import RoadmapUtilities from '@/assets/js/roadmap/RoadmapUtilities'
 
 import RoadmapOptions from './components/RoadmapOptions.vue'
 
@@ -232,12 +244,13 @@ export default {
 
   data () {
     return {
+      manualMarks: '',
+
       results: [],
-      breadplate: {},
-      bigroad: {},
-      bigeyeboy: {},
-      smallroad: {},
-      cockroachPig: {},
+
+      roadmap: null,
+      roadmapUtils: null,
+
       config: {
         breadplate: {
           show_options: false,
@@ -269,6 +282,7 @@ export default {
   },
 
   created () {
+    this.roadmapUtils = new RoadmapUtilities()
     this.initRoadmap()
   },
 
@@ -279,55 +293,50 @@ export default {
     },
 
     initRoadmap () {
-      this.breadplate = new BreadPlate({
+      this.roadmap = new Roadmap({
         results: this.results,
-        rows: this.config.breadplate.rows,
-        cols: this.config.breadplate.cols
-      })
-
-      this.bigroad = new BigRoad({
-        results: this.results,
-        rows: this.config.bigroad.rows,
-        cols: this.config.bigroad.cols
-      })
-
-      this.bigeyeboy = new BigEyeBoy({
-        bigRoadMatrix: this.bigroad.matrix,
-        rows: this.config.bigeyeboy.rows,
-        cols: this.config.bigeyeboy.cols
-      })
-
-      this.smallroad = new SmallRoad({
-        bigRoadMatrix: this.bigroad.matrix,
-        rows: this.config.smallroad.rows,
-        cols: this.config.smallroad.cols
-      })
-
-      this.cockroachPig = new CockroachPig({
-        bigRoadMatrix: this.bigroad.matrix,
-        rows: this.config.cockroachPig.rows,
-        cols: this.config.cockroachPig.cols
+        config: this.config
       })
     },
 
     push (key) {
-      this.breadplate.push(key)
-      this.breadplate.__ob__.dep.notify()
+      this.results.push(key)
 
-      this.bigroad.push(key)
-      this.bigroad.__ob__.dep.notify()
+      this.roadmap.push(key)
+    },
 
-      this.bigeyeboy.bigRoadMatrix = this.bigroad.matrix
-      this.bigeyeboy.traverseBigRoadScheme()
-      this.bigeyeboy.__ob__.dep.notify()
+    // eslint-disable-next-line vue/no-unused-properties
+    formatArray (arr) {
+      const str = JSON.stringify(arr)
 
-      this.smallroad.bigRoadMatrix = this.bigroad.matrix
-      this.smallroad.traverseBigRoadScheme()
-      this.smallroad.__ob__.dep.notify()
+      return str
+        .replace(/(\[)(\[)/g, '$1\n$2')
+        .replace(/(\])(\])/g, '$1\n$2')
+        .replace(/(\],)(\[)/g, '$1\n$2')
+        .replace(/(\[.)/g, '  $1')
+    },
 
-      this.cockroachPig.bigRoadMatrix = this.bigroad.matrix
-      this.cockroachPig.traverseBigRoadScheme()
-      this.cockroachPig.__ob__.dep.notify()
+    saveConfig (configKey) {
+      const config = this.config[configKey]
+
+      config.show_options = false
+
+      this.initRoadmap()
+    },
+
+    saveManualResult () {
+      const manualResultsArray = this.manualMarks.split('')
+
+      const isValidResults = manualResultsArray.every(mark => {
+        return this.roadmapUtils.identityDictionary[mark]
+      })
+
+      if (!isValidResults) {
+        return alert('Invalid marks')
+      }
+
+      this.results = manualResultsArray
+      this.initRoadmap()
     }
   }
 }
