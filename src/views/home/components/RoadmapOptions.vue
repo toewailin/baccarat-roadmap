@@ -20,6 +20,7 @@
         v-model.number="config.rows"
         label="Rows"
         type="search"
+        class="mb-2"
       />
 
       <base-input
