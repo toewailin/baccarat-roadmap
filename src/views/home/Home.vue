@@ -1,48 +1,7 @@
 <template>
   <div class="home">
-    <div class="actions">
-      <base-button
-        class="bg-blue-500 text-white"
-        @click="push('p')"
-      >
-        Player
-      </base-button>
-
-      <base-button
-        class="bg-red-500 text-white"
-        @click="push('b')"
-      >
-        Banker
-      </base-button>
-
-      <base-button
-        class="bg-green-500 text-white"
-        @click="push('t')"
-      >
-        Tie
-      </base-button>
-
-      <base-button
-        class="bg-white text-black"
-        @click="clearRoadmap"
-      >
-        Clear
-      </base-button>
-    </div>
-
-    <div class="actions">
-      <base-input
-        v-model="manualMarks"
-        label="Marks"
-        type="search"
-      />
-
-      <base-button
-        class="bg-blue-500"
-        @click="saveManualResult"
-      >
-        Save
-      </base-button>
+    <div class="header">
+      <h1>Baccarat Roadmap Simulator</h1>
     </div>
 
     <div class="roadmap-container">
@@ -211,6 +170,63 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <div class="actions__title">
+        Custom Marks
+      </div>
+
+      <div class="actions__body">
+        <base-input
+          v-model="manualMarks"
+          label="Marks"
+          type="search"
+        />
+
+        <base-button
+          class="bg-blue-500 self-end"
+          @click="saveManualResult"
+        >
+          Save
+        </base-button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <div class="actions__title">
+        Actions
+      </div>
+
+      <div class="actions__body">
+        <base-button
+          class="bg-blue-500 text-white"
+          @click="push('p')"
+        >
+          Player
+        </base-button>
+
+        <base-button
+          class="bg-red-500 text-white"
+          @click="push('b')"
+        >
+          Banker
+        </base-button>
+
+        <base-button
+          class="bg-green-500 text-white"
+          @click="push('t')"
+        >
+          Tie
+        </base-button>
+
+        <base-button
+          class="bg-white text-black"
+          @click="clearRoadmap"
+        >
+          Clear
+        </base-button>
       </div>
     </div>
   </div>

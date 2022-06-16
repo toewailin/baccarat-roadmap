@@ -3,10 +3,25 @@
   width: 100%;
   padding: 20px;
 
-  .actions {
-    display: flex;
-    gap: 10px;
+  .header {
     margin-bottom: 20px;
+    h1 {
+      font-size: 2em;
+    }
+  }
+
+  .actions {
+    margin-bottom: 10px;
+
+    .actions__title {
+      font-size: 0.9em;
+      margin-bottom: 5px;
+    }
+
+    .actions__body {
+      display: flex;
+      gap: 10px;
+    }
   }
 
   .roadmap {
@@ -15,6 +30,7 @@
     display: grid;
     border-top: $roadmap-border;
     border-left: $roadmap-border;
+    margin-bottom: 10px;
     grid-template:
       "breadPlate breadPlate bigRoad bigRoad"
       "breadPlate breadPlate bigEyeBoy bigEyeBoy"
