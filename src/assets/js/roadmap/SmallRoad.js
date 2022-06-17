@@ -1,10 +1,11 @@
 import RoadmapUtilities from './RoadmapUtilities'
+import BigRoad from './BigRoad'
 
 import _get from 'lodash/get'
 import _findLastIndex from 'lodash/findLastIndex'
 import _defaultsDeep from 'lodash/defaultsDeep'
 
-export default class BigEyeBoy extends RoadmapUtilities {
+export default class SmallRoad extends RoadmapUtilities {
   constructor (_options) {
     super()
 
@@ -12,12 +13,25 @@ export default class BigEyeBoy extends RoadmapUtilities {
       results: [],
       rows: 6,
       cols: 9,
-      bigRoadMatrix: []
+      bigroadConfig: {
+        rows: 6,
+        cols: 26
+      }
     })
 
     for (const key in options) {
       this[key] = options[key]
     }
+
+    this.bigRoadMatrix = (() => {
+      const bigroad = new BigRoad({
+        results: this.results,
+        rows: this.bigroadConfig.rows,
+        cols: this.bigroadConfig.cols
+      })
+
+      return bigroad.matrix
+    })()
 
     this.traverseBigRoadScheme()
   }
