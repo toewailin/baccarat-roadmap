@@ -69,7 +69,7 @@ export default class Roadmap {
   /**
    * Used as utility getter for sub classes
    */
-  get getLastColumn () {
+  get lastColumn () {
     const [prevRow, prevCol] = this.previousCoordinates
 
     return this.matrix[prevRow][prevCol] || null
