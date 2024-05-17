@@ -5,37 +5,21 @@
     </div>
 
     <div class="roadmap-container">
-      <div
-        v-if="roadmap"
-        class="roadmap"
-      >
+      <div v-if="roadmap" class="roadmap">
         <div class="roadmap__item roadmap__item--bread-plate">
           <div class="roadmap__item--title">
             Bread Plate
           </div>
 
-          <RoadmapOptions
-            v-model="config.breadplate"
-            class="roadmap__item--options"
-            @save="saveConfig('breadplate')"
-          />
+          <RoadmapOptions v-model="config.breadplate" class="roadmap__item--options" @save="saveConfig('breadplate')" />
 
           <div class="grid">
-            <div
-              v-for="(row, rowKey) in roadmap.breadplate.matrix"
-              :key="rowKey"
-              class="grid__row"
-            >
-              <div
-                v-for="(col, colKey) in row"
-                :key="colKey"
-                class="grid__col text-gray-200"
-                :class="{
-                  'bg-red-500': col && col.value === 'b',
-                  'bg-blue-500': col && col.value === 'p',
-                  'bg-green-500': col && col.value === 't',
-                }"
-              >
+            <div v-for="(row, rowKey) in roadmap.breadplate.matrix" :key="rowKey" class="grid__row">
+              <div v-for="(col, colKey) in row" :key="colKey" class="grid__col text-gray-200" :class="{
+                'bg-red-500': col && col.value === 'b',
+                'bg-blue-500': col && col.value === 'p',
+                'bg-green-500': col && col.value === 't',
+              }">
                 <small>{{ col.index }}</small>
               </div>
             </div>
@@ -47,28 +31,15 @@
             Big Road
           </div>
 
-          <RoadmapOptions
-            v-model="config.bigroad"
-            class="roadmap__item--options"
-            @save="saveConfig('bigroad')"
-          />
+          <RoadmapOptions v-model="config.bigroad" class="roadmap__item--options" @save="saveConfig('bigroad')" />
 
           <div class="grid">
-            <div
-              v-for="(row, rowKey) in roadmap.bigroad.matrix"
-              :key="rowKey"
-              class="grid__row"
-            >
-              <div
-                v-for="(col, colKey) in row"
-                :key="colKey"
-                class="grid__col text-gray-200"
-                :class="{
-                  'bg-red-500': col && col.value === 'b',
-                  'bg-blue-500': col && col.value === 'p',
-                  'bg-green-500': col && col.value === 't',
-                }"
-              >
+            <div v-for="(row, rowKey) in roadmap.bigroad.matrix" :key="rowKey" class="grid__row">
+              <div v-for="(col, colKey) in row" :key="colKey" class="grid__col text-gray-200" :class="{
+                'bg-red-500': col && col.value === 'b',
+                'bg-blue-500': col && col.value === 'p',
+              }">
+                <div v-if="col.tie_count > 0" class="w-2px h-2px bg-green-500">{{ col.tie_count }}</div>
                 <small>{{ col.index }}</small>
               </div>
             </div>
@@ -80,28 +51,18 @@
             Big Eye Boy
           </div>
 
-          <RoadmapOptions
-            v-model="config.bigeyeboy"
-            class="roadmap__item--options"
-            @save="saveConfig('bigeyeboy')"
-          />
+          <RoadmapOptions v-model="config.bigeyeboy" class="roadmap__item--options" @save="saveConfig('bigeyeboy')" />
 
           <div class="grid">
-            <div
-              v-for="(row, rowKey) in roadmap.bigeyeboy.matrix"
-              :key="rowKey"
-              class="grid__row"
-            >
-              <div
-                v-for="(col, colKey) in row"
-                :key="colKey"
-                class="grid__col text-gray-200"
-                :class="{
+            <div v-for="(row, rowKey) in roadmap.bigeyeboy.matrix" :key="rowKey" class="grid__row">
+              <div v-for="(col, colKey) in row" :key="colKey" class="grid__col text-gray-200">
+                <div class="w-full h-full rounded-full text-center" :class="{
                   'bg-red-500': col && col.value === 'red',
                   'bg-blue-500': col && col.value === 'blue',
-                }"
-              >
-                <small>{{ col.big_road_index }}</small>
+                }">
+
+                  <small>{{ col.big_road_index }}</small>
+                </div>
               </div>
             </div>
           </div>
@@ -112,27 +73,14 @@
             Small Road
           </div>
 
-          <RoadmapOptions
-            v-model="config.smallroad"
-            class="roadmap__item--options"
-            @save="saveConfig('smallroad')"
-          />
+          <RoadmapOptions v-model="config.smallroad" class="roadmap__item--options" @save="saveConfig('smallroad')" />
 
           <div class="grid">
-            <div
-              v-for="(row, rowKey) in roadmap.smallroad.matrix"
-              :key="rowKey"
-              class="grid__row"
-            >
-              <div
-                v-for="(col, colKey) in row"
-                :key="colKey"
-                class="grid__col"
-                :class="{
-                  'bg-red-500': col && col.value === 'red',
-                  'bg-blue-500': col && col.value === 'blue',
-                }"
-              >
+            <div v-for="(row, rowKey) in roadmap.smallroad.matrix" :key="rowKey" class="grid__row">
+              <div v-for="(col, colKey) in row" :key="colKey" class="grid__col" :class="{
+                'bg-red-500': col && col.value === 'red',
+                'bg-blue-500': col && col.value === 'blue',
+              }">
                 <small>{{ col ? col.big_road_index : '' }}</small>
               </div>
             </div>
@@ -144,27 +92,15 @@
             Cockroach Pig
           </div>
 
-          <RoadmapOptions
-            v-model="config.cockroachPig"
-            class="roadmap__item--options"
-            @save="saveConfig('cockroachPig')"
-          />
+          <RoadmapOptions v-model="config.cockroachPig" class="roadmap__item--options"
+            @save="saveConfig('cockroachPig')" />
 
           <div class="grid">
-            <div
-              v-for="(row, rowKey) in roadmap.cockroachPig.matrix"
-              :key="rowKey"
-              class="grid__row"
-            >
-              <div
-                v-for="(col, colKey) in row"
-                :key="colKey"
-                class="grid__col"
-                :class="{
-                  'bg-red-500': col && col.value === 'red',
-                  'bg-blue-500': col && col.value === 'blue',
-                }"
-              >
+            <div v-for="(row, rowKey) in roadmap.cockroachPig.matrix" :key="rowKey" class="grid__row">
+              <div v-for="(col, colKey) in row" :key="colKey" class="grid__col" :class="{
+                'bg-red-500': col && col.value === 'red',
+                'bg-blue-500': col && col.value === 'blue',
+              }">
                 <small>{{ col ? col.big_road_index : '' }}</small>
               </div>
             </div>
@@ -179,16 +115,9 @@
       </div>
 
       <div class="actions__body">
-        <base-input
-          v-model="manualMarks"
-          label="Marks"
-          type="search"
-        />
+        <base-input v-model="manualMarks" label="Marks" type="search" />
 
-        <base-button
-          class="bg-blue-500 self-end"
-          @click="saveManualResult"
-        >
+        <base-button class="bg-blue-500 self-end" @click="saveManualResult">
           Save
         </base-button>
       </div>
@@ -200,31 +129,19 @@
       </div>
 
       <div class="actions__body">
-        <base-button
-          class="bg-blue-500 text-white"
-          @click="push('p')"
-        >
+        <base-button class="bg-blue-500 text-white" @click="push('p')">
           Player
         </base-button>
 
-        <base-button
-          class="bg-red-500 text-white"
-          @click="push('b')"
-        >
+        <base-button class="bg-red-500 text-white" @click="push('b')">
           Banker
         </base-button>
 
-        <base-button
-          class="bg-green-500 text-white"
-          @click="push('t')"
-        >
+        <base-button class="bg-green-500 text-white" @click="push('t')">
           Tie
         </base-button>
 
-        <base-button
-          class="bg-white text-black"
-          @click="clearRoadmap"
-        >
+        <base-button class="bg-white text-black" @click="clearRoadmap">
           Clear
         </base-button>
       </div>
@@ -246,7 +163,7 @@ export default {
     RoadmapOptions
   },
 
-  data () {
+  data() {
     return {
       manualMarks: '',
 
@@ -287,21 +204,21 @@ export default {
 
   watch: {
     config: {
-      handler (val) {
+      handler(val) {
         localStorage.setItem('roadmap-config', JSON.stringify(val))
       },
       deep: true
     }
   },
 
-  created () {
+  created() {
     this.initLocalConfig()
     this.roadmapUtils = new RoadmapUtilities()
     this.initRoadmap()
   },
 
   methods: {
-    initLocalConfig () {
+    initLocalConfig() {
       const localConfig = localStorage.getItem('roadmap-config')
 
       if (localConfig) {
@@ -315,26 +232,28 @@ export default {
       }
     },
 
-    clearRoadmap () {
+    clearRoadmap() {
       this.results = []
       this.initRoadmap()
     },
 
-    initRoadmap () {
+    initRoadmap() {
       this.roadmap = new Roadmap({
         results: this.results,
         config: this.config
       })
     },
 
-    push (key) {
+    push(key) {
       this.results.push(key)
 
       this.roadmap.push(key)
+
+      console.log(this.roadmap);
     },
 
     // eslint-disable-next-line vue/no-unused-properties
-    formatArray (arr) {
+    formatArray(arr) {
       const str = JSON.stringify(arr)
 
       return str
@@ -344,7 +263,7 @@ export default {
         .replace(/(\[.)/g, '  $1')
     },
 
-    saveConfig (configKey) {
+    saveConfig(configKey) {
       const config = this.config[configKey]
 
       config.show_options = false
@@ -352,7 +271,7 @@ export default {
       this.initRoadmap()
     },
 
-    saveManualResult () {
+    saveManualResult() {
       const manualResultsArray = this.manualMarks.split('')
 
       const isValidResults = manualResultsArray.every(mark => {

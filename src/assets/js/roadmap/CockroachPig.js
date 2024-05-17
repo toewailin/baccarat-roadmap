@@ -57,17 +57,17 @@ export default class CockroachPig extends RoadmapUtilities {
      * If E2 is empty, the starting point is F1
      */
 
-    const E2 = [1, 4]
-    const F1 = [0, 5]
+    const D2 = [1, 3]
+    const E1 = [0, 4]
 
-    const c2HasValue = this.bigRoadMatrix[E2[0]][E2[1]]
-    const d1HasValue = this.bigRoadMatrix[F1[0]][F1[1]]
+    const c2HasValue = this.bigRoadMatrix[D2[0]][D2[1]]
+    const d1HasValue = this.bigRoadMatrix[E1[0]][E1[1]]
 
     if (!c2HasValue && !d1HasValue) {
       return
     }
 
-    let [initialRow, initialCol] = c2HasValue ? E2 : F1
+    let [initialRow, initialCol] = c2HasValue ? D2 : E1
 
     while (true) {
       const col = this.bigRoadMatrix[initialRow][initialCol]
@@ -153,6 +153,7 @@ export default class CockroachPig extends RoadmapUtilities {
   }
 
   getColumnLength (columnIdx) {
+    const coordinates = [1, columnIdx]
     const column = this.bigRoadMatrix[coordinates[0]][coordinates[1]]
     const rootIdentity = this.identityDictionary[column.value]
 

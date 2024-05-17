@@ -95,26 +95,34 @@ export default class BigRoad extends RoadmapUtilities {
     const [nextRow, nextCol] = this.getNextCoordinate(identity)
     const [prevRow, prevCol] = JSON.parse(JSON.stringify(this.previousCoordinates))
 
-    const prevColValue = _get(this.matrix[prevRow][prevCol], 'value')
+    const prevColValue = _get(this.matrix[prevRow][prevCol], 'tie_count')
     const isAnotherTie = isTie && this.tieIdentities.includes(prevColValue)
 
+    console.log(_get(this.matrix[prevRow][prevCol], 'tie_count'));
     /**
      * If previous col is tie and the current identity
      * is also tie
      */
-    if (isAnotherTie) {
-      return this.matrix[prevRow][prevCol].tie_count++
+
+    if(isTie){
+      if(prevColValue > 0){
+        return this.matrix[prevRow][prevCol].tie_count++
+      }else{
+        return this.matrix[prevRow][prevCol].tie_count = 1;
+      }
+
+    }else{
+      this.matrix[nextRow][nextCol] = {
+        value: key,
+        index: this.index++,
+        tie_count: isTie ? 1 : 0
+      }
     }
 
     this.previousCoordinates = [nextRow, nextCol]
     this.previousIdentity = identity
 
-    this.matrix[nextRow][nextCol] = {
-      value: key,
-      index: this.index++,
-      tie_count: isTie ? 1 : 0
-    }
-
+    
     if (this.hasFullRow) {
       this.matrix = this.truncateFirstColumn()
       this.previousCoordinates = [nextRow, nextCol - 1]
